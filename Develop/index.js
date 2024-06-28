@@ -1,7 +1,5 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
-const { default: Choices } = require('inquirer/lib/objects/choices');
-const path = require('path');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown');
 // TODO: Create an array of questions for user input
@@ -45,7 +43,7 @@ const questions = [
 	{
 		type: 'input',
 		name: 'contributors',
-		message: '(Use Github)who contributributed to this project?',
+		message: '(Use Github)who contributed to this project?',
 	},
 	{
 		type: 'input',
@@ -54,20 +52,20 @@ const questions = [
 	},
 ];
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-    
-	inquirer
-		.prompt(questions)
-		.then((data) => {
-			console.log(data);
-			const READMEtext = generateMarkdown(data);
-            console.log(READMEtext)
-            
+function writeToFile() {
+    inquirer.prompt(questions)
+        .then((data) => {
+            console.log(data);
+            const READMEtext = generateMarkdown(data);
+            console.log(READMEtext);
 
-			fs.writeFile('README.md', READMEtext, (err) =>
-				err ? console.log(err) : console.log('Successfully created README.md')
-			);
-		});
+            fs.writeFile('README.md', READMEtext, (err) =>
+                err ? console.log(err) : console.log('Successfully created README.md')
+            );
+        })
+        .catch((error) => {
+            console.error('An error occurred:', error);
+        });
 }
 
 // TODO: Create a function to initialize app
